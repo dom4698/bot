@@ -1,5 +1,13 @@
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access the token using the environment variable
+DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
 intents = discord.Intents.all()
 intents.message_content = True
@@ -24,9 +32,9 @@ async def on_member_join(member):
     welcome_channel = member.guild.get_channel(1194057800012275792)
     await welcome_channel.send(f'Hey sir, {member.mention}! I am a dirty nigger: Please use !intro to learn more about me.')
 
-    @bot.command(name='verify')
-    async def verify(ctx):
-      if  isinstance(ctx.channel, discord.DMChannel):
+@bot.command(name='verify')
+async def verify(ctx):
+    if isinstance(ctx.channel, discord.DMChannel):
 
         # Add a role to the user after verification
         verified_role = discord.utils.get(ctx.guild.roles, name='Member')
@@ -35,4 +43,4 @@ async def on_member_join(member):
         # Send a confirmation message
         await ctx.send('Verification successful! You now have access to the server.')
 
-bot.run('MTE5NDIwNzI4NzgzNzk4MjczMA.GxyPhA.VMsTnrzKwi6hZP5Vkc-hS18XF7ekr-sJGvMJGA')
+bot.run(DISCORD_TOKEN)
